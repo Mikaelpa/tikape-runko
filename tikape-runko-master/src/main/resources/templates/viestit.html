@@ -1,0 +1,85 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Viestit</title>
+        <meta charset="utf-8" />
+        
+        <style>
+            table {
+                width:100%;
+            }
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+                text-align: left;
+            }
+            table#t01 tr:nth-child(even) {
+                background-color: #eee;
+            }
+            table#t01 tr:nth-child(odd) {
+               background-color:#fff;
+            }
+            table#t01 th {
+                background-color: black;
+                color: white;
+            }
+        </style>
+    </head>
+
+    <body bgcolor = "#cceeff">
+        <h1>Keskustelun <font color="#00BB00"><span th:text="${keskustelu.nimi}"></span></font> viestit:</h1>
+
+<!--        <ol>
+            <li th:each="viesti: ${viestit}">
+                <span th:text="${viesti.teksti}"></span> kirjoittanut <span th:text="${viesti.kirjoittajannimi}">viestin teksti</span>
+            </li>
+        </ol>-->
+
+        <table>
+            <thead>
+            <tr>
+                
+                <td>
+                    <h3>Viesti</h3>
+                </td>
+                <td>
+                    <h3><font color="#BB0000">Kirjoittanut</font></h3>
+                </td>
+                <td>
+                    <h3>Päiväys</h3>
+                </td>
+            </tr>
+                </thead>
+            <tr th:each="viesti: ${viestit}">
+                <td>
+                    <span th:text="${viesti.teksti}">viestin teksti</span>
+                </td>
+                <td>
+                    <font color="#BB0000"><span th:text="${viesti.kirjoittajannimi}"></span></font>
+                </td>
+                <td>
+                    <span th:text="${viesti.paivays}">viestin aika</span>
+                </td>
+            </tr>
+        </table>
+
+        
+        <h3>Lisää uusi viesti:</h3>
+        <form method="POST" th:action="@{~/alueet/{id}/keskustelut/{keskid}(id=${alue.id},keskid=${keskustelu.id})}">
+            <span>Viesti:</span>
+            <input type="text" name="teksti" style="height:60px;"/>
+            <span>Nimimerkki:</span>
+            <input type="text" name="keskusteli"/>
+            <input type="submit" value="Lisää"/>
+        </form>
+
+
+        <p><a href="/">Takaisin pääsivulle...</a></p>
+        <p><a th:href="${'/alueet/' + alue.id}">Takaisin keskusteluvalikkoon...</a></p>
+
+    </body>
+</html>
